@@ -41,6 +41,10 @@ BENCHMARK_RUN = $(BENCHMARK_DIR)/run
 
 PEGJS_VERSION = `cat $(VERSION_FILE)`
 
+DIST_NAME = pegjs
+DIST_VERSION = $(PEGJS_VERSION)
+DIST_BASE = $(DIST_NAME)-$(DIST_VERSION)
+
 # ===== Preprocessor =====
 
 # A simple preprocessor that recognizes two directives:
@@ -140,6 +144,19 @@ hint: build
 	  $(BENCHMARK_DIR)/*.js \
 	  $(BENCHMARK_RUN)      \
 	  $(PEGJS)
+
+# Make a distribution tarball for packaging
+# Note: we don't currently include the benchmark tree in the dist tarball
+# because it contains non-human-readable jQuery artifacts and this can
+# be an impediment to distribution in free software archives such as
+# Debian and Fedora.
+# Run the benchmark from git if required.
+srcdist:
+	-rm -rf $(DIST_BASE)
+	mkdir $(DIST_BASE)
+	cp -r bin CHANGELOG examples lib LICENSE Makefile package.json README.md src test tools VERSION $(DIST_BASE)
+	tar czf $(DIST_BASE).tar.gz $(DIST_BASE)
+
 
 .PHONY: test benchmark hint parser build clean dist distclean
 .SILENT: test benchmark hint parser build clean dist distclean
