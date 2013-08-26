@@ -31,8 +31,8 @@ VERSION_FILE   = VERSION
 
 # ===== Executables =====
 
-JSHINT        = jshint
-UGLIFYJS      = uglifyjs
+JSHINT        ?= jshint
+UGLIFYJS      ?= uglifyjs
 PEGJS         = $(BIN_DIR)/pegjs
 TEST_RUN      = $(TEST_DIR)/run
 BENCHMARK_RUN = $(BENCHMARK_DIR)/run
